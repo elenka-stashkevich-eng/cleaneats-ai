@@ -3,7 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CleanEats AI 🌿</title>
+  <link rel="icon" type="image/png" href="generated-icon.png">
+  <title>CleanEats AI — умный помощник по питанию</title>
+  <meta name="description" content="Персональные советы по питанию, здоровые ужины и идеи меню от AI-помощника в женском wellness-стиле."> 
+  <meta property="og:title" content="CleanEats AI — умный помощник по питанию">
+  <meta property="og:description" content="Здоровые идеи, wellness-меню и женственный AI-стиль.">
+  <meta property="og:image" content="56041921-3D17-4363-9D04-6156CD8899E3.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CleanEats AI — твой wellness-помощник по питанию">
+  <meta property="og:description" content="Спроси про ужин, меню на день или ПП — AI подберёт варианты под тебя.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="56041921-3D17-4363-9D04-6156CD8899E3.png">
+  <meta property="og:url" content="/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="56041921-3D17-4363-9D04-6156CD8899E3.png">
   <style>
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
@@ -82,7 +95,50 @@
       justify-content: center;
       height: 100vh;
     }
+    @media (max-width: 480px) {
+      header[style] {
+        bottom: 10px;
+        padding: 6px 14px;
+      }
+      #greeting-line {
+        font-size: 13px;
+      }
+      .features-panel {
+        margin-top: 18px;
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(6px);
+        border-radius: 22px;
+        padding: 16px 18px;
+        width: min(92%, 520px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+      }
 
+      .features-panel h2 {
+        margin: 0 0 10px;
+        font-size: 16px;
+        color: #4A235A;
+        font-weight: 600;
+      }
+
+      .features-panel ul {
+        padding-left: 18px;
+        margin: 0;
+        display: grid;
+        gap: 6px;
+      }
+
+      .features-panel li {
+        font-size: 13.5px;
+        color: #555;
+      }
+
+      .features-panel .hint {
+        margin-top: 12px;
+        font-size: 12.5px;
+        color: #A55555;
+        font-style: italic;
+      }
+    }
     .chat-container {
       width: 90%;
       max-width: 420px;
@@ -187,22 +243,33 @@
       <button onclick="sendMessage()">Отправить</button>
     </div>
   </div>
-
+  <div class="features-panel">
+    <h2>Что я умею 💛</h2>
+    <ul>
+      <li>Придумать здоровый ужин без мяса</li>
+      <li>Собрать меню на день под твой калораж</li>
+      <li>Предложить ПП-десерты и перекусы</li>
+      <li>Заменить “вредное” на более лёгкое</li>
+      <li>Сделать список покупок по меню</li>
+    </ul>
+    <p class="hint">Скажи, что у тебя есть в холодильнике 🥑</p>
+  </div>
   <script>
+    // 1. тёплые фразы для блока "что я умею"
     const greetings = [
-      "Ты сегодня выглядишь чудесно 🌺",
+      "Ты сегодня выглядишь чудесно 🌸",
       "Сияешь как утреннее солнце ☀️",
       "Ты — вдохновение для здорового дня 🌿",
       "Красота начинается с заботы о себе 💚",
       "Пусть сегодня будет день лёгкости и радости 🍋"
     ];
 
-    const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-
+    // 2. основной чат
     const messages = document.getElementById('messages');
     const botIntro = document.createElement('div');
+    const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
     botIntro.classList.add('bot-message');
-    botIntro.innerText = `Привет! Я CleanEats AI — твой wellness-помощник 🍃\n${randomGreeting}\nЧем могу помочь сегодня?`;
+    botIntro.innerText = `Привет! Я CleanEats AI — твой wellness-помощник 🥑Чем могу помочь сегодня?`;
     messages.appendChild(botIntro);
 
     async function sendMessage() {
@@ -210,15 +277,17 @@
       const text = input.value.trim();
       if (!text) return;
 
+      // сообщение пользователя
       const userMsg = document.createElement('div');
       userMsg.classList.add('user-message');
       userMsg.innerText = text;
       messages.appendChild(userMsg);
       input.value = '';
 
+      // сообщение бота "думаю..."
       const botMsg = document.createElement('div');
       botMsg.classList.add('bot-message');
-      botMsg.innerText = 'Думаю над ответом... 🤔';
+      botMsg.innerText = "Думаю над ответом... 🤔";
       messages.appendChild(botMsg);
       messages.scrollTop = messages.scrollHeight;
 
@@ -236,61 +305,47 @@
 
       messages.scrollTop = messages.scrollHeight;
     }
-      messages.scrollTop = messages.scrollHeight;
+
+    // 3. приветствие внизу (та, круглая плашка)
+    const now = new Date();
+    const hours = now.getHours();
+    let greeting = "";
+    if (hours < 12) {
+      greeting = "Доброе утро";
+    } else if (hours < 18) {
+      greeting = "Добрый день";
+    } else {
+      greeting = "Добрый вечер";
+    }
+
+    const options = { weekday: 'long', day: 'numeric', month: 'long' };
+    const formattedDate = now.toLocaleDateString('ru-RU', options);
+
+    // пытаемся взять имя из localStorage
+    let userName = localStorage.getItem('cleanEatsName');
+    if (!userName) {
+      userName = prompt("Привет, красотка! 💛 Давай знакомиться! Как тебя зовут?");
+      if (userName && userName.trim() !== "") {
+        userName = userName.trim();
+        localStorage.setItem('cleanEatsName', userName);
       }
+    }
 
-      // 👇 Вставляешь сюда код приветствия
-      const now = new Date();
-      const hours = now.getHours();
-      let greeting = "";
+    const headerParagraph = document.getElementById('greeting-line');
+    const dateEl = document.getElementById('date-line');
 
-      if (hours < 12) {
-        greeting = "Доброе утро";
-      } else if (hours < 18) {
-        greeting = "Добрый день";
+    if (headerParagraph) {
+      if (userName && userName.trim() !== "") {
+        headerParagraph.textContent = `${greeting}, ${userName} 💛`;
       } else {
-        greeting = "Добрый вечер";
+        headerParagraph.textContent = `${greeting} 💛`;
       }
+    }
 
-      const options = { weekday: 'long', day: 'numeric', month: 'long' };
-      const formattedDate = now.toLocaleDateString('ru-RU', options);
-
-      const compliments = [
-        "Ты сегодня излучаешь гармонию 💫",
-        "Твоя энергия вдохновляет 🌿",
-        "Ты выглядишь чудесно — сияешь как солнце ☀️",
-        "Ты создаёшь красоту вокруг 💖",
-        "Сегодня — день твоего внутреннего баланса 🌸"
-      ];
-
-      const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
-      const userName = "Елена";
-      const message = `${greeting}, ${userName}! 💛\n${formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)}\n${randomCompliment}`;
-
-      const headerParagraph = document.querySelector("header p");
-      headerParagraph.innerText = message;
-
-      headerParagraph.style.whiteSpace = "pre-line";
-      headerParagraph.style.fontStyle = "italic";
-      headerParagraph.style.fontWeight = "500";
-      headerParagraph.style.color = "#5A5A5A";
-      headerParagraph.style.marginTop = "10px";
-      headerParagraph.style.textShadow = "0 0 8px rgba(255, 200, 150, 0.3)";
-    </script>
+    if (dateEl) {
+      dateEl.textContent = formattedDate;
+    }
   </script>
-  </script>
-
-  <header style="text-align: center; margin-top: 20px;">
-    <img src="56041921-3D17-4363-9D04-6156CD8899E3.png" alt="CleanEats AI Logo"
-    style="width:120px; border-radius:50%; box-shadow:0 0 12px rgba(0,0,0,0.2);">
-    <h1 style="font-family: 'Poppins', sans-serif; color: #4A235A; margin-top: 10px;">
-      CleanEats AI 🍊
-    </h1>
-    <p style="color:#5A5A5A; font-style:italic;">Добро пожаловать, Елена 💛</p>
-  </header>
 
   </body>
   </html>
-</body>
-  </header>
-</html>
